@@ -1,0 +1,32 @@
+@host = http://localhost:5280
+@json = application/json
+
+### Login
+POST {{host}}/api/auth/login
+Content-Type: {{json}}
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### List docs
+GET {{host}}/api/docs
+
+### Add text
+POST {{host}}/api/docs/text
+Content-Type: {{json}}
+
+{
+  "title": "Sample",
+  "text": "Q: What is this app? A: A Knowledge Base Chatbot MVP."
+}
+
+### Ask
+POST {{host}}/api/chat/ask
+Content-Type: {{json}}
+
+{
+  "message": "What is this app?"
+}
+

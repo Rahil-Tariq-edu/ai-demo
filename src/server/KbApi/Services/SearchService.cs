@@ -41,14 +41,7 @@ public class SearchService
             new SimpleField("url", SearchFieldDataType.String) { IsFilterable = false },
             new SimpleField("chunkNo", SearchFieldDataType.Int32) { IsFilterable = true }
         };
-        var definition = new SearchIndex(name, fields)
-        {
-            SemanticSettings = new SemanticSettings(new[] { new SemanticConfiguration("default", new PrioritizedFields()
-            {
-                TitleField = new SemanticField("title"),
-                ContentFields = { new SemanticField("content") }
-            }) })
-        };
+        var definition = new SearchIndex(name, fields);
 
         await _indexClient.CreateOrUpdateIndexAsync(definition);
     }
@@ -59,9 +52,7 @@ public class SearchService
         var options = new SearchOptions
         {
             Size = top,
-            QueryType = SearchQueryType.Semantic,
-            SemanticConfigurationName = "default",
-            QueryLanguage = QueryLanguage.EnUs
+            QueryType = SearchQueryType.Simple
         };
         options.Select.Add("title");
         options.Select.Add("url");

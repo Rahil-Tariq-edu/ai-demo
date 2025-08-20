@@ -60,9 +60,9 @@ public class IngestionService
         return await AddTextAsync(userId, title, text);
     }
 
-    public async Task<Document> AddFileAsync(Guid userId, string title, Stream contentStream, string contentType, Func<Stream,string,string,Task<string>> extractor)
+    public async Task<Document> AddFileAsync(Guid userId, string title, Stream contentStream, string fileName, string contentType, Func<Stream,string,string,Task<string>> extractor)
     {
-        var text = await extractor(contentStream, contentType);
+        var text = await extractor(contentStream, fileName, contentType);
         return await AddTextAsync(userId, title, text);
     }
 

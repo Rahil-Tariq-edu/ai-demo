@@ -67,7 +67,7 @@ public class DocsController : ControllerBase
         var docsCount = await _db.Documents.CountAsync(d => d.UserId == user.Id);
         if (docsCount >= caps.MaxDocs) return BadRequest(new { error = "plan_limit" });
         await using var stream = file.OpenReadStream();
-        var doc = await _ingestion.AddFileAsync(user.Id, title ?? file.FileName, stream, file.ContentType, _docIntel.ExtractTextAsync);
+        var doc = await _ingestion.AddFileAsync(user.Id, title ?? file.FileName, stream, file.FileName, file.ContentType, _docIntel.ExtractTextAsync);
         return Ok(new { doc.Id });
     }
 }

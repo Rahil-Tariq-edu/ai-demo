@@ -13,7 +13,7 @@ public class DocIntelService
         _settings = options.Value;
     }
 
-    public async Task<string> ExtractTextAsync(Stream fileStream, string contentType)
+    public async Task<string> ExtractTextAsync(Stream fileStream, string fileName, string contentType)
     {
         if (!string.IsNullOrWhiteSpace(_settings.AzureDocIntelEndpoint) && !string.IsNullOrWhiteSpace(_settings.AzureDocIntelKey))
         {

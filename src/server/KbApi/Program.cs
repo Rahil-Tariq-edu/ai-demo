@@ -39,12 +39,17 @@ builder.Services.AddCors(options =>
 });
 
 // EF Core
-var connectionString = builder.Configuration.GetConnectionString("Default")
-                       ?? builder.Configuration["SQL_CONNECTION_STRING"]
-                       ?? "Server=localhost;Database=kbapp;User Id=sa;Password=Your_password123;TrustServerCertificate=True;";
+var connectionString = builder.Configuration.GetConnectionString("Default") ?? builder.Configuration["SQL_CONNECTION_STRING"];
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(connectionString);
+    if (!string.IsNullOrWhiteSpace(connectionString))
+    {
+        options.UseSqlServer(connectionString);
+    }
+    else
+    {
+        options.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "kbapp.db")}");
+    }
 });
 
 // Authentication (JWT)
